@@ -58,3 +58,24 @@ const isValid = validateQuad(term) // -> false
 ### `validateDataset`
 
 TODO
+
+
+### Configuring validators
+
+Datatype validators are stored in a registry. They can be changed at runtime.
+
+```javascript
+import { validators, validateTerm } from 'rdf-datatype-validation'
+import rdf from '@rdfjs/data-model'
+import { xsd } from '@tpluscode/rdf-ns-builders'
+
+// Register a new datatype
+const myDatatype = rdf.namedNode('my-datatype')
+validators.register(myDatatype, value => value.startsWith('X-'))
+validateTerm(rdf.literal('X-test', myDatatype)) // -> true
+validateTerm(rdf.literal('test', myDatatype)) // -> false
+
+// Override an existing datatype
+validators.register(xsd.date, value => true)
+validateTerm(rdf.literal('banana', xsd.date)) // -> true
+```
