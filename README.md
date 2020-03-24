@@ -3,6 +3,8 @@
 
 Validate that RDF literal term values correspond to their declared datatype.
 
+[![Build Status](https://travis-ci.org/zazuko/rdf-datatype-validation.svg?branch=master)](https://travis-ci.org/zazuko/rdf-datatype-validation)
+
 
 ## Install
 
