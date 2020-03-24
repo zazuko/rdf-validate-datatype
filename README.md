@@ -32,7 +32,28 @@ const isValid = validateTerm(term) // -> false
 
 ### `validateQuad`
 
-TODO
+`validateQuad` validates that the `.object` of a given quad is valid in regards
+to its declared datatype.
+
+```javascript
+import { validateQuad } from 'rdf-datatype-validation'
+import rdf from '@rdfjs/data-model'
+import { schema, xsd } from '@tpluscode/rdf-ns-builders'
+
+const quad = rdf.quad(
+  rdf.namedNode('bob'),
+  schema.birthDate,
+  rdf.literal('2019-01-01', xsd.date)
+)
+const isValid = validateQuad(term) // -> true
+
+const quad = rdf.quad(
+  rdf.namedNode('bob'),
+  schema.birthDate,
+  rdf.literal('invalid date', xsd.date)
+)
+const isValid = validateQuad(term) // -> false
+```
 
 ### `validateDataset`
 
