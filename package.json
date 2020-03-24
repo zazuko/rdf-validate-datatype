@@ -24,5 +24,8 @@
     "@rdfjs/data-model": "1.1.2",
     "mocha": "7.1.1",
     "standard": "14.3.3"
+  },
+  "engines": {
+    "node": ">=10.4"
   }
 }
