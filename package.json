@@ -16,7 +16,12 @@
     "url": "https://github.com/zazuko/rdf-datatype-validation/issues"
   },
   "homepage": "https://github.com/zazuko/rdf-datatype-validation#readme",
+  "dependencies": {
+    "@rdfjs/to-ntriples": "1.0.2",
+    "@tpluscode/rdf-ns-builders": "0.1.0"
+  },
   "devDependencies": {
+    "@rdfjs/data-model": "1.1.2",
     "mocha": "7.1.1",
     "standard": "14.3.3"
   }
