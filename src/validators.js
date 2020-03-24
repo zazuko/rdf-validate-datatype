@@ -1,4 +1,5 @@
-const { xsd } = require('@tpluscode/rdf-ns-builders')
+/* global BigInt */
+const { csvw, rdf, xsd } = require('@tpluscode/rdf-ns-builders')
 const { termToNTriples: toCanonical } = require('@rdfjs/to-ntriples')
 
 /**
@@ -42,15 +43,78 @@ const validators = new Registry()
 
 validators.register(xsd.string, value => true)
 
-validators.register(xsd.integer, value => {
-  const parsed = parseInt(value)
-  return (
-    /^(\+|-)?\d+$/.test(value) &&
-    !isNaN(parsed) &&
-    parsed >= -2147483648 &&
-    parsed <= 2147483647
-  )
-})
+const signSeg = '(\\+|-)?'
+const integerPattern = new RegExp(`^${signSeg}\\d+$`)
+
+validators.register(xsd.integer, value => integerPattern.test(value))
+
+validators.register(xsd.nonNegativeInteger, value => (
+  integerPattern.test(value) &&
+  BigInt(value) >= BigInt('0')
+))
+
+validators.register(xsd.positiveInteger, value => (
+  integerPattern.test(value) &&
+  BigInt(value) > BigInt('0')
+))
+
+validators.register(xsd.nonPositiveInteger, value => (
+  integerPattern.test(value) &&
+  BigInt(value) <= BigInt('0')
+))
+
+validators.register(xsd.negativeInteger, value => (
+  integerPattern.test(value) &&
+  BigInt(value) < BigInt('0')
+))
+
+validators.register(xsd.int, value => (
+  integerPattern.test(value) &&
+  BigInt(value) >= BigInt('-2147483647') &&
+  BigInt(value) <= BigInt('2147483648')
+))
+
+validators.register(xsd.unsignedInt, value => (
+  integerPattern.test(value) &&
+  BigInt(value) >= BigInt('0') &&
+  BigInt(value) <= BigInt('4294967295')
+))
+
+validators.register(xsd.long, value => (
+  integerPattern.test(value) &&
+  BigInt(value) >= BigInt('-9223372036854775808') &&
+  BigInt(value) <= BigInt('9223372036854775807')
+))
+
+validators.register(xsd.unsignedLong, value => (
+  integerPattern.test(value) &&
+  BigInt(value) >= BigInt('0') &&
+  BigInt(value) <= BigInt('18446744073709551615')
+))
+
+validators.register(xsd.short, value => (
+  integerPattern.test(value) &&
+  BigInt(value) >= BigInt('-32768') &&
+  BigInt(value) <= BigInt('32767')
+))
+
+validators.register(xsd.unsignedShort, value => (
+  integerPattern.test(value) &&
+  BigInt(value) >= BigInt('0') &&
+  BigInt(value) <= BigInt('65535')
+))
+
+validators.register(xsd.byte, value => (
+  integerPattern.test(value) &&
+  BigInt(value) >= BigInt('-128') &&
+  BigInt(value) <= BigInt('127')
+))
+
+validators.register(xsd.unsignedByte, value => (
+  integerPattern.test(value) &&
+  BigInt(value) >= BigInt('0') &&
+  BigInt(value) <= BigInt('255')
+))
 
 validators.register(xsd.boolean, value => (
   value === '1' ||
@@ -59,17 +123,21 @@ validators.register(xsd.boolean, value => (
   value === 'false'
 ))
 
-validators.register(xsd.decimal, value => /^(\+|-)?\d+(\.\d+)?$/.test(value))
+const decimalSeg = `${signSeg}\\d+(\\.\\d+)?`
+
+const decimalPattern = new RegExp(`^${signSeg}${decimalSeg}$`)
+validators.register(xsd.decimal, value => decimalPattern.test(value))
 
 validators.register(xsd.float, validateFloat)
 validators.register(xsd.double, validateFloat)
 
+const floatPattern = new RegExp(`^${signSeg}${decimalSeg}((E|e)(\\+|-)?\\d+)?$`)
 function validateFloat (value) {
   return (
     value === 'INF' ||
     value === '-INF' ||
     value === 'NaN' ||
-    /^(\+|-)?\d+(\.\d+)?((E|e)(\+|-)?\d+)?$/.test(value)
+    floatPattern.test(value)
   )
 }
 
@@ -121,15 +189,21 @@ const timePattern = new RegExp(`^${timeSeg}${timezoneSeg}$`)
 validators.register(xsd.time, value => timePattern.test(value))
 
 // TODO
-validators.register(xsd.hexBinary, value => true)
-
-// TODO
-validators.register(xsd.base64Binary, value => true)
-
-// TODO
+validators.register(xsd.anyAtomicType, value => true)
 validators.register(xsd.anyURI, value => true)
-
-// TODO
+validators.register(xsd.base64Binary, value => true)
+validators.register(xsd.dateTimeStamp, value => true)
+validators.register(xsd.dayTimeDuration, value => true)
+validators.register(xsd.yearhMonthDuration, value => true)
+validators.register(xsd.hexBinary, value => true)
 validators.register(xsd.QName, value => true)
+validators.register(xsd.normalizedString, value => true)
+validators.register(xsd.token, value => true)
+validators.register(xsd.language, value => true)
+validators.register(xsd.Name, value => true)
+validators.register(xsd.NMTOKEN, value => true)
+validators.register(rdf.xml, value => true)
+validators.register(rdf.html, value => true)
+validators.register(csvw.json, value => true)
 
 module.exports = validators
