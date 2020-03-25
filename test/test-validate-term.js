@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 const assert = require('assert')
 const $rdf = require('@rdfjs/data-model')
-const { xsd } = require('@tpluscode/rdf-ns-builders')
+const { csvw, xsd } = require('@tpluscode/rdf-ns-builders')
 
 const { validateTerm } = require('../index')
 
@@ -362,7 +362,20 @@ describe('#validateTerm', () => {
     ['0fb', xsd.hexBinary, false],
     ['z', xsd.hexBinary, false],
     ['G1', xsd.hexBinary, false],
-    ['test', xsd.hexBinary, false]
+    ['test', xsd.hexBinary, false],
+
+    ['', csvw.JSON, false],
+    ['[', csvw.JSON, false],
+    ['a', csvw.JSON, false],
+    ['4', csvw.JSON, true],
+    ['null', csvw.JSON, true],
+    ['[]', csvw.JSON, true],
+    ['{}', csvw.JSON, true],
+    ['"test"', csvw.JSON, true],
+    ['{"test": "test"}', csvw.JSON, true],
+    ['{"test": "test",}', csvw.JSON, false],
+    ['{"test": 2}', csvw.JSON, true],
+    ['{4: 2}', csvw.JSON, false]
   ].forEach(([input, datatype, expected, remark]) => {
     const datatypeName = datatype.value.split('#').slice(-1)[0]
     const titleRemark = remark ? ` (${remark})` : ''

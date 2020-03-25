@@ -231,13 +231,21 @@ const b64FinalSeg = `(${b64FinalQuadSeg}|${b64Padded16Seg}|${b64Padded8Seg})`
 const b64Pattern = new RegExp(`^(${b64QuadSeg}*${b64FinalSeg})?$`)
 validators.register(xsd.base64Binary, value => b64Pattern.test(value))
 
+validators.register(csvw.JSON, value => {
+  try {
+    JSON.parse(value)
+    return true
+  } catch (e) {
+    return false
+  }
+})
+
 // TODO
 validators.register(xsd.NMTOKEN, value => true)
 validators.register(xsd.QName, value => true)
 validators.register(xsd.Name, value => true)
 validators.register(xsd.anyURI, value => true)
-validators.register(rdf.xml, value => true)
-validators.register(rdf.html, value => true)
-validators.register(csvw.json, value => true)
+validators.register(rdf.XMLLiteral, value => true)
+validators.register(rdf.HTML, value => true)
 
 module.exports = validators
