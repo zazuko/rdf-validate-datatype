@@ -268,6 +268,19 @@ describe('#validateTerm', () => {
     ['2020-04-02T23:33', xsd.dateTime, false],
     ['test', xsd.dateTime, false],
 
+    ['2020-04-02T23:33:12.234Z', xsd.dateTimeStamp, true],
+    ['2020-04-02T23:33:12.234+04:00', xsd.dateTimeStamp, true],
+    ['2020-04-02T23:33:12+04:00', xsd.dateTimeStamp, true],
+    ['2020-04-02T23:33:12', xsd.dateTimeStamp, false],
+    ['2020-04-02T23:33:12x', xsd.dateTimeStamp, false],
+    // ['2020-24-02T23:33:12Z', xsd.dateTimeStamp, false, 'invalid month'],
+    // ['2020-04-32T23:33:12Z', xsd.dateTimeStamp, false, 'invalid month day'],
+    // ['2020-04-02T24:33:12Z', xsd.dateTimeStamp, false, 'invalid hour'],
+    // ['2020-04-02T20:83:12Z', xsd.dateTimeStamp, false, 'invalid minute'],
+    // ['2020-04-02T20:23:82Z', xsd.dateTimeStamp, false, 'invalid seconds'],
+    ['2020-04-02T23:33Z', xsd.dateTimeStamp, false],
+    ['test', xsd.dateTimeStamp, false],
+
     ['23:33:12.234', xsd.time, true],
     ['03:43:12.234Z', xsd.time, true],
     ['23:33:12.134+04:00', xsd.time, true],
@@ -323,7 +336,33 @@ describe('#validateTerm', () => {
     ['-2020-05-02:00', xsd.gYearMonth, true],
     ['2020-12-01', xsd.gYearMonth, false],
     ['2020-04X', xsd.gYearMonth, false],
-    ['test', xsd.gYearMonth, false]
+    ['test', xsd.gYearMonth, false],
+
+    ['', xsd.base64Binary, true],
+    ['dGVzdAo=', xsd.base64Binary, true],
+    ['test', xsd.base64Binary, true],
+    ['test test', xsd.base64Binary, true],
+    ['dkKz84Jdo+k4 kxi8', xsd.base64Binary, true],
+    ['dkKz84Jdo+k4 kxi', xsd.base64Binary, false],
+    ['dkKz84Jdo+k4 kxi=', xsd.base64Binary, false],
+    ['dkKz84Jdo+k4 kx0=', xsd.base64Binary, true],
+    ['dkKz84Jdo+k4 kx0 =', xsd.base64Binary, true],
+    ['dkKz84Jdo+k4 kQ==', xsd.base64Binary, true],
+    ['dkKz84Jdo+k4 kx==', xsd.base64Binary, false],
+    ['dkKz84Jdo+k4 kx= =', xsd.base64Binary, false],
+    ['dkKz84Jdo+k4 kx = =', xsd.base64Binary, false],
+    ['a', xsd.base64Binary, false],
+    ['tests', xsd.base64Binary, false],
+    ['%%%%', xsd.base64Binary, false],
+    ['%44=', xsd.base64Binary, false],
+
+    ['', xsd.hexBinary, true],
+    ['0FB7', xsd.hexBinary, true],
+    ['0fb7', xsd.hexBinary, true],
+    ['0fb', xsd.hexBinary, false],
+    ['z', xsd.hexBinary, false],
+    ['G1', xsd.hexBinary, false],
+    ['test', xsd.hexBinary, false]
   ].forEach(([input, datatype, expected, remark]) => {
     const datatypeName = datatype.value.split('#').slice(-1)[0]
     const titleRemark = remark ? ` (${remark})` : ''

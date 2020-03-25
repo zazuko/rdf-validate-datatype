@@ -181,45 +181,61 @@ const yearMonthDurationPattern = new RegExp(`^${dateSignSeg}P${durationYearMonth
 validators.register(xsd.yearMonthDuration, value => yearMonthDurationPattern.test(value))
 
 const yearSeg = `${dateSignSeg}\\d{4}`
-const timezoneSeg = '(((\\+|-)\\d{2}:\\d{2})|Z)?'
+const timezoneSeg = '(((\\+|-)\\d{2}:\\d{2})|Z)'
 const monthSeg = '\\d{2}'
 const daySeg = '\\d{2}'
 const dateSeg = `${yearSeg}-${monthSeg}-${daySeg}`
 const timeSeg = '\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?'
-const dateTimeSeg = `${dateSeg}T${timeSeg}${timezoneSeg}`
 
-const dateTimePattern = new RegExp(`^${dateTimeSeg}$`)
+const dateTimePattern = new RegExp(`^${dateSeg}T${timeSeg}${timezoneSeg}?$`)
 validators.register(xsd.dateTime, value => dateTimePattern.test(value))
 
-const datePattern = new RegExp(`^${dateSeg}${timezoneSeg}$`)
+const dateTimeStampPattern = new RegExp(`^${dateSeg}T${timeSeg}${timezoneSeg}$`)
+validators.register(xsd.dateTimeStamp, value => dateTimeStampPattern.test(value))
+
+const datePattern = new RegExp(`^${dateSeg}${timezoneSeg}?$`)
 validators.register(xsd.date, value => datePattern.test(value))
 
-const dayPattern = new RegExp(`^${daySeg}${timezoneSeg}$`)
+const dayPattern = new RegExp(`^${daySeg}${timezoneSeg}?$`)
 validators.register(xsd.gDay, value => dayPattern.test(value))
 
-const monthPattern = new RegExp(`^${monthSeg}${timezoneSeg}$`)
+const monthPattern = new RegExp(`^${monthSeg}${timezoneSeg}?$`)
 validators.register(xsd.gMonth, value => monthPattern.test(value))
 
-const monthDayPattern = new RegExp(`^${monthSeg}-${daySeg}${timezoneSeg}$`)
+const monthDayPattern = new RegExp(`^${monthSeg}-${daySeg}${timezoneSeg}?$`)
 validators.register(xsd.gMonthDay, value => monthDayPattern.test(value))
 
-const yearPattern = new RegExp(`^${yearSeg}${timezoneSeg}$`)
+const yearPattern = new RegExp(`^${yearSeg}${timezoneSeg}?$`)
 validators.register(xsd.gYear, value => yearPattern.test(value))
 
-const yearMonthPattern = new RegExp(`^${yearSeg}-${monthSeg}${timezoneSeg}$`)
+const yearMonthPattern = new RegExp(`^${yearSeg}-${monthSeg}${timezoneSeg}?$`)
 validators.register(xsd.gYearMonth, value => yearMonthPattern.test(value))
 
-const timePattern = new RegExp(`^${timeSeg}${timezoneSeg}$`)
+const timePattern = new RegExp(`^${timeSeg}${timezoneSeg}?$`)
 validators.register(xsd.time, value => timePattern.test(value))
+
+const hexBinaryPattern = /^([0-9a-fA-F]{2})*$/
+validators.register(xsd.hexBinary, value => hexBinaryPattern.test(value))
+
+const b64CharSeg = '[A-Za-z0-9+/]'
+const b16CharSeg = '[AEIMQUYcgkosw048]'
+const b04CharSeg = '[AQgw]'
+const b64Seg = `(${b64CharSeg} ?)`
+const b16Seg = `(${b16CharSeg} ?)`
+const b04Seg = `(${b04CharSeg} ?)`
+const b64Padded16Seg = `(${b64Seg}{2}${b16Seg}=)`
+const b64Padded8Seg = `(${b64Seg}${b04Seg}= ?=)`
+const b64QuadSeg = `(${b64Seg}{4})`
+const b64FinalQuadSeg = `(${b64Seg}{3}${b64CharSeg})`
+const b64FinalSeg = `(${b64FinalQuadSeg}|${b64Padded16Seg}|${b64Padded8Seg})`
+const b64Pattern = new RegExp(`^(${b64QuadSeg}*${b64FinalSeg})?$`)
+validators.register(xsd.base64Binary, value => b64Pattern.test(value))
 
 // TODO
 validators.register(xsd.NMTOKEN, value => true)
 validators.register(xsd.QName, value => true)
 validators.register(xsd.Name, value => true)
 validators.register(xsd.anyURI, value => true)
-validators.register(xsd.base64Binary, value => true)
-validators.register(xsd.dateTimeStamp, value => true)
-validators.register(xsd.hexBinary, value => true)
 validators.register(rdf.xml, value => true)
 validators.register(rdf.html, value => true)
 validators.register(csvw.json, value => true)
