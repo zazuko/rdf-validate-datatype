@@ -41,7 +41,25 @@ class Registry {
 
 const validators = new Registry()
 
+validators.register(xsd.anyAtomicType, value => true)
 validators.register(xsd.string, value => true)
+
+validators.register(xsd.normalizedString, value => isNormalized(value))
+
+validators.register(xsd.token, value => (
+  isNormalized(value) &&
+  !value.startsWith(' ') &&
+  !value.endsWith(' ') &&
+  !value.includes('  ')
+))
+
+function isNormalized (value) {
+  const forbiddenChars = ['\n', '\r', '\t']
+  return !forbiddenChars.some(forbiddenChar => value.includes(forbiddenChar))
+}
+
+const languagePattern = /^[a-zA-Z]{1,8}(-[a-zA-Z0-9]{1,8})*$/
+validators.register(xsd.language, value => languagePattern.test(value))
 
 const signSeg = '(\\+|-)?'
 const integerPattern = new RegExp(`^${signSeg}\\d+$`)
@@ -142,19 +160,25 @@ function validateFloat (value) {
 }
 
 const dateSignSeg = '-?'
-const durationYearsSeg = '\\d+Y'
-const durationMonthsSeg = '\\d+M'
-const durationDaysSeg = '\\d+D'
-const durationHoursSeg = '\\d+H'
-const durationMinutesSeg = '\\d+M'
-const durationSecondsSeg = '\\d+(\\.\\d+)?S'
-// All the segments are optional, but at least one of them must be specified.
-// TODO: Is there a cleaner way to specify this?
-const durationTimeSeg = `(T(${durationHoursSeg})(${durationMinutesSeg})?(${durationSecondsSeg})?)|((${durationHoursSeg})?(${durationMinutesSeg})(${durationSecondsSeg})?)|((${durationHoursSeg})?(${durationMinutesSeg})?(${durationSecondsSeg}))`
-const durationSeg = `${dateSignSeg}P(${durationYearsSeg})?(${durationMonthsSeg})?(${durationDaysSeg})?(${durationTimeSeg})?`
+const durationYearSeg = '\\d+Y'
+const durationMonthSeg = '\\d+M'
+const durationDaySeg = '\\d+D'
+const durationHourSeg = '\\d+H'
+const durationMinuteSeg = '\\d+M'
+const durationSecondSeg = '\\d+(\\.\\d+)?S'
+const durationYearMonthSeg = `(${durationYearSeg}(${durationMonthSeg})?|${durationMonthSeg})`
+const durationTimeSeg = `T((${durationHourSeg}(${durationMinuteSeg})?(${durationSecondSeg})?)|(${durationMinuteSeg}(${durationSecondSeg})?)|${durationSecondSeg})`
+const durationDayTimeSeg = `(${durationDaySeg}(${durationTimeSeg})?|${durationTimeSeg})`
+const durationSeg = `${dateSignSeg}P((${durationYearMonthSeg}(${durationDayTimeSeg})?)|${durationDayTimeSeg})`
 
 const durationPattern = new RegExp(`^${durationSeg}$`)
 validators.register(xsd.duration, value => durationPattern.test(value))
+
+const dayTimeDurationPattern = new RegExp(`^${dateSignSeg}P${durationDayTimeSeg}$`)
+validators.register(xsd.dayTimeDuration, value => dayTimeDurationPattern.test(value))
+
+const yearMonthDurationPattern = new RegExp(`^${dateSignSeg}P${durationYearMonthSeg}$`)
+validators.register(xsd.yearMonthDuration, value => yearMonthDurationPattern.test(value))
 
 const yearSeg = `${dateSignSeg}\\d{4}`
 const timezoneSeg = '(((\\+|-)\\d{2}:\\d{2})|Z)?'
@@ -189,19 +213,13 @@ const timePattern = new RegExp(`^${timeSeg}${timezoneSeg}$`)
 validators.register(xsd.time, value => timePattern.test(value))
 
 // TODO
-validators.register(xsd.anyAtomicType, value => true)
+validators.register(xsd.NMTOKEN, value => true)
+validators.register(xsd.QName, value => true)
+validators.register(xsd.Name, value => true)
 validators.register(xsd.anyURI, value => true)
 validators.register(xsd.base64Binary, value => true)
 validators.register(xsd.dateTimeStamp, value => true)
-validators.register(xsd.dayTimeDuration, value => true)
-validators.register(xsd.yearhMonthDuration, value => true)
 validators.register(xsd.hexBinary, value => true)
-validators.register(xsd.QName, value => true)
-validators.register(xsd.normalizedString, value => true)
-validators.register(xsd.token, value => true)
-validators.register(xsd.language, value => true)
-validators.register(xsd.Name, value => true)
-validators.register(xsd.NMTOKEN, value => true)
 validators.register(rdf.xml, value => true)
 validators.register(rdf.html, value => true)
 validators.register(csvw.json, value => true)
