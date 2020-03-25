@@ -8,7 +8,7 @@ const validateTerm = require('./validate-term')
  * @returns {boolean} - `true` if valid, `false` otherwise
  */
 function validateQuad (quad) {
-  return validateTerm(quad.object)
+  return quad.object.termType !== 'Literal' || validateTerm(quad.object)
 }
 
 module.exports = validateQuad
