@@ -61,6 +61,9 @@ function isNormalized (value) {
 const languagePattern = /^[a-zA-Z]{1,8}(-[a-zA-Z0-9]{1,8})*$/
 validators.register(xsd.language, value => languagePattern.test(value))
 
+const anyURIPattern = /^[^\ufffe\uffff]*$/
+validators.register(xsd.anyURI, value => anyURIPattern.test(value))
+
 const signSeg = '(\\+|-)?'
 const integerPattern = new RegExp(`^${signSeg}\\d+$`)
 
@@ -244,7 +247,6 @@ validators.register(csvw.JSON, value => {
 validators.register(xsd.NMTOKEN, value => true)
 validators.register(xsd.QName, value => true)
 validators.register(xsd.Name, value => true)
-validators.register(xsd.anyURI, value => true)
 validators.register(rdf.XMLLiteral, value => true)
 validators.register(rdf.HTML, value => true)
 

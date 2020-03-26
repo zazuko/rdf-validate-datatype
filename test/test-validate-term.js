@@ -29,11 +29,13 @@ describe('#validateTerm', () => {
     ['', xsd.string, true],
     ['test', xsd.string, true],
 
+    ['', xsd.normalizedString, true],
     ['test', xsd.normalizedString, true],
     ['test\n', xsd.normalizedString, false],
     ['test\r', xsd.normalizedString, false],
     ['test\t', xsd.normalizedString, false],
 
+    ['', xsd.token, true],
     ['test', xsd.token, true],
     ['test\n', xsd.token, false],
     ['test\r', xsd.token, false],
@@ -52,6 +54,19 @@ describe('#validateTerm', () => {
     ['&', xsd.language, false],
     ['fr+', xsd.language, false],
     ['thisisalongword', xsd.language, false],
+
+    ['', xsd.anyURI, true],
+    ['test', xsd.anyURI, true],
+    ['example:test', xsd.anyURI, true],
+    ['example.org:test', xsd.anyURI, true],
+    ['example.org/test', xsd.anyURI, true],
+    ['example.org/test#test', xsd.anyURI, true],
+    ['http://example.org/test#test', xsd.anyURI, true],
+    ['something://example.org/test#test', xsd.anyURI, true],
+    ['\ufffe', xsd.anyURI, false],
+    ['\uffff', xsd.anyURI, false],
+    ['test\ufffetest', xsd.anyURI, false],
+    ['test\ufffftest', xsd.anyURI, false],
 
     ['1', xsd.integer, true],
     ['-18', xsd.integer, true],
