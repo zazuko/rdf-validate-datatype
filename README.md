@@ -55,11 +55,6 @@ const quad = rdf.quad(
 const isValid = validateQuad(term) // -> false
 ```
 
-### `validateDataset`
-
-TODO
-
-
 ### Configuring validators
 
 Datatype validators are stored in a registry. They can be changed at runtime.
