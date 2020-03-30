@@ -26,6 +26,9 @@ describe('#validateTerm', () => {
     ['', xsd.anyAtomicType, true],
     ['test', xsd.anyAtomicType, true],
 
+    ['', xsd.anySimpleType, true],
+    ['test', xsd.anySimpleType, true],
+
     ['', xsd.string, true],
     ['test', xsd.string, true],
 

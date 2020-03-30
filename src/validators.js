@@ -41,6 +41,7 @@ class Registry {
 
 const validators = new Registry()
 
+validators.register(xsd.anySimpleType, value => true)
 validators.register(xsd.anyAtomicType, value => true)
 validators.register(xsd.string, value => true)
 
@@ -244,9 +245,17 @@ validators.register(csvw.JSON, value => {
 })
 
 // TODO
-validators.register(xsd.NMTOKEN, value => true)
+validators.register(xsd.NOTATION, value => true)
 validators.register(xsd.QName, value => true)
 validators.register(xsd.Name, value => true)
+validators.register(xsd.NCName, value => true)
+validators.register(xsd.ENTITY, value => true)
+validators.register(xsd.ID, value => true)
+validators.register(xsd.IDREF, value => true)
+validators.register(xsd.NMTOKEN, value => true)
+validators.register(xsd.ENTITIES, value => true)
+validators.register(xsd.IDREFS, value => true)
+validators.register(xsd.NMTOKENS, value => true)
 validators.register(rdf.XMLLiteral, value => true)
 validators.register(rdf.HTML, value => true)
 
