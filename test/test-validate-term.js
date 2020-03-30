@@ -7,8 +7,8 @@ const { validateTerm } = require('../index')
 
 describe('#validateTerm', () => {
   it('returns true for terms without datatype', () => {
-    const term = $rdf.literal('test')
-    const isValid = validateTerm(term, null)
+    const term = $rdf.literal('test', null)
+    const isValid = validateTerm(term)
     assert.strictEqual(isValid, true)
   })
 
