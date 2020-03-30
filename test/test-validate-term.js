@@ -12,6 +12,12 @@ describe('#validateTerm', () => {
     assert.strictEqual(isValid, true)
   })
 
+  it('returns true for unkown datatype', () => {
+    const term = $rdf.literal('test%é*$_4', $rdf.namedNode('custom-datatype'))
+    const isValid = validateTerm(term)
+    assert.strictEqual(isValid, true)
+  })
+
   it('throws on named nodes', () => {
     const term = $rdf.namedNode('test')
     assert.throws(() => validateTerm(term), Error)
