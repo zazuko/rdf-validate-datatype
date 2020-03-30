@@ -1,21 +1,21 @@
 {
-  "name": "rdf-datatype-validation",
+  "name": "rdf-validate-datatype",
   "version": "0.0.0",
-  "description": "RDF datatype validation",
+  "description": "Validate literal value of an RDF term based on its datatype.",
   "main": "index.js",
   "scripts": {
     "test": "standard && mocha"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zazuko/rdf-datatype-validation.git"
+    "url": "git+https://github.com/zazuko/rdf-validate-datatype.git"
   },
   "author": "Martin Maillard <martin.maillard@zazuko.com>",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zazuko/rdf-datatype-validation/issues"
+    "url": "https://github.com/zazuko/rdf-validate-datatype/issues"
   },
-  "homepage": "https://github.com/zazuko/rdf-datatype-validation#readme",
+  "homepage": "https://github.com/zazuko/rdf-validate-datatype#readme",
   "dependencies": {
     "@rdfjs/to-ntriples": "1.0.2",
     "@tpluscode/rdf-ns-builders": "0.1.0"

@@ -1,14 +1,14 @@
 
-# rdf-datatype-validation
+# rdf-validate-datatype
 
-Validate that RDF literal term values correspond to their declared datatype.
+Validate literal value of an RDF term based on its declared datatype.
 
-[![Build Status](https://travis-ci.org/zazuko/rdf-datatype-validation.svg?branch=master)](https://travis-ci.org/zazuko/rdf-datatype-validation)
+[![Build Status](https://travis-ci.org/zazuko/rdf-validate-datatype.svg?branch=master)](https://travis-ci.org/zazuko/rdf-validate-datatype)
 
 
 ## Install
 
-`$ npm install rdf-datatype-validation`
+`$ npm install rdf-validate-datatype`
 
 
 ## Usage
@@ -16,7 +16,7 @@ Validate that RDF literal term values correspond to their declared datatype.
 ### `validateTerm`
 
 ```javascript
-import { validateTerm } from 'rdf-datatype-validation'
+import { validateTerm } from 'rdf-validate-datatype'
 import rdf from '@rdfjs/data-model'
 import { xsd } from '@tpluscode/rdf-ns-builders'
 
@@ -36,7 +36,7 @@ const isValid = validateTerm(term) // -> false
 to its declared datatype.
 
 ```javascript
-import { validateQuad } from 'rdf-datatype-validation'
+import { validateQuad } from 'rdf-validate-datatype'
 import rdf from '@rdfjs/data-model'
 import { schema, xsd } from '@tpluscode/rdf-ns-builders'
 
@@ -60,7 +60,7 @@ const isValid = validateQuad(term) // -> false
 Datatype validators are stored in a registry. They can be changed at runtime.
 
 ```javascript
-import { validators, validateTerm } from 'rdf-datatype-validation'
+import { validators, validateTerm } from 'rdf-validate-datatype'
 import rdf from '@rdfjs/data-model'
 import { xsd } from '@tpluscode/rdf-ns-builders'
 
