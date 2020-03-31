@@ -10,6 +10,11 @@
     "type": "git",
     "url": "git+https://github.com/zazuko/rdf-validate-datatype.git"
   },
+  "keywords": [
+    "rdf",
+    "validation",
+    "datatype"
+  ],
   "author": "Martin Maillard <martin.maillard@zazuko.com>",
   "license": "MIT",
   "bugs": {
@@ -27,5 +32,9 @@
   },
   "engines": {
     "node": ">=10.4"
-  }
+  },
+  "files": [
+    "/src",
+    "index.js"
+  ]
 }
