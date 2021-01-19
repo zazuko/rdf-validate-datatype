@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 const assert = require('assert')
 const $rdf = require('@rdfjs/data-model')
-const { csvw, xsd } = require('@tpluscode/rdf-ns-builders')
+const { csvw, xsd } = require('../src/namespaces')
 
 const { validateTerm } = require('../index')
 

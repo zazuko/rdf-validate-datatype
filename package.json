@@ -24,14 +24,14 @@
   },
   "homepage": "https://github.com/zazuko/rdf-validate-datatype#readme",
   "dependencies": {
-    "@rdfjs/to-ntriples": "1.0.2",
-    "@tpluscode/rdf-ns-builders": "0.1.0"
+    "@rdfjs/to-ntriples": "^1.0.2",
+    "@rdfjs/namespace": "^1.1.0"
   },
   "devDependencies": {
-    "@rdfjs/data-model": "1.1.2",
-    "mocha": "7.1.1",
-    "nyc": "15.0.0",
-    "standard": "14.3.3"
+    "@rdfjs/data-model": "~1.2.0",
+    "mocha": "~8.2.1",
+    "nyc": "~15.1.0",
+    "standard": "~16.0.0"
   },
   "engines": {
     "node": ">=10.4"
