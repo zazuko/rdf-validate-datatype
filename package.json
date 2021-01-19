@@ -1,6 +1,6 @@
 {
   "name": "rdf-validate-datatype",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Validate literal value of an RDF term based on its datatype.",
   "main": "index.js",
   "scripts": {
