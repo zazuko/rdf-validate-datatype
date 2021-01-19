@@ -3,7 +3,6 @@
 
 Validate literal value of an RDF term based on its declared datatype.
 
-[![Build Status](https://travis-ci.org/zazuko/rdf-validate-datatype.svg?branch=master)](https://travis-ci.org/zazuko/rdf-validate-datatype)
 [![npm version](https://badge.fury.io/js/rdf-validate-datatype.svg)](https://badge.fury.io/js/rdf-validate-datatype)
 
 
