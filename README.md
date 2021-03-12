@@ -16,9 +16,11 @@ Validate literal value of an RDF term based on its declared datatype.
 ### `validateTerm`
 
 ```javascript
-import { validateTerm } from 'rdf-validate-datatype'
+import validateDatatype from 'rdf-validate-datatype'
 import rdf from '@rdfjs/data-model'
 import { xsd } from '@tpluscode/rdf-ns-builders'
+
+const { validateTerm } = validateDatatype
 
 const term = rdf.literal('test')
 const isValid = validateTerm(term) // -> true
@@ -36,9 +38,11 @@ const isValid = validateTerm(term) // -> false
 to its declared datatype.
 
 ```javascript
-import { validateQuad } from 'rdf-validate-datatype'
+import validateDatatype from 'rdf-validate-datatype'
 import rdf from '@rdfjs/data-model'
 import { schema, xsd } from '@tpluscode/rdf-ns-builders'
+
+const { validateQuad } = validateDatatype
 
 const quad = rdf.quad(
   rdf.namedNode('bob'),
