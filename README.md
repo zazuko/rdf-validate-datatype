@@ -64,9 +64,11 @@ const isValid = validateQuad(term) // -> false
 Datatype validators are stored in a registry. They can be changed at runtime.
 
 ```javascript
-import { validators, validateTerm } from 'rdf-validate-datatype'
+import validateDatatype from 'rdf-validate-datatype'
 import rdf from '@rdfjs/data-model'
 import { xsd } from '@tpluscode/rdf-ns-builders'
+
+const { validators, validateTerm } = validateDatatype
 
 // Register a new datatype
 const myDatatype = rdf.namedNode('my-datatype')
