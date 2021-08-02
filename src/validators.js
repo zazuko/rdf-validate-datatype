@@ -203,7 +203,7 @@ validators.register(xsd.date, value => datePattern.test(value))
 const dayPattern = new RegExp(`^${daySeg}${timezoneSeg}?$`)
 validators.register(xsd.gDay, value => dayPattern.test(value))
 
-const monthPattern = new RegExp(`^${monthSeg}${timezoneSeg}?$`)
+const monthPattern = new RegExp(`^--${monthSeg}${timezoneSeg}?$`)
 validators.register(xsd.gMonth, value => monthPattern.test(value))
 
 const monthDayPattern = new RegExp(`^${monthSeg}-${daySeg}${timezoneSeg}?$`)
