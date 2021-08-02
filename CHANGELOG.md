@@ -1,6 +1,10 @@
 
 # Changelog
 
+## 0.1.4 (2021-08-02)
+
+* Enforce leading "--" for `xsd:gMonth`
+
 ## 0.1.3 (2021-01-19)
 
 * Fix broken published 0.1.2
