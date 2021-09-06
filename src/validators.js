@@ -1,6 +1,6 @@
 /* global BigInt */
 const { csvw, rdf, xsd } = require('./namespaces')
-const { termToNTriples: toCanonical } = require('@rdfjs/to-ntriples')
+const toCanonical = require('@rdfjs/to-ntriples')
 
 /**
  * Validators registry
