@@ -184,7 +184,7 @@ validators.register(xsd.dayTimeDuration, value => dayTimeDurationPattern.test(va
 const yearMonthDurationPattern = new RegExp(`^${dateSignSeg}P${durationYearMonthSeg}$`)
 validators.register(xsd.yearMonthDuration, value => yearMonthDurationPattern.test(value))
 
-const yearSeg = `(${dateSignSeg}[1-9]\\d{3,})|(0\\d{3})`
+const yearSeg = `${dateSignSeg}(([1-9]\\d{3,})|(0\\d{3}))`
 const timezoneSeg = '(((\\+|-)\\d{2}:\\d{2})|Z)'
 const monthSeg = '\\d{2}'
 const daySeg = '\\d{2}'
