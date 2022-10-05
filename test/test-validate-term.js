@@ -396,7 +396,6 @@ describe('#validateTerm', () => {
     ['test', xsd.gYearMonth, false],
     ['', xsd.gYearMonth, false],
 
-
     ['', xsd.base64Binary, true],
     ['dGVzdAo=', xsd.base64Binary, true],
     ['test', xsd.base64Binary, true],
