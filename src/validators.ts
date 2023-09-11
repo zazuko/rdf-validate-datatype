@@ -1,49 +1,45 @@
-/* global BigInt */
-import toCanonical from '@rdfjs/to-ntriples'
 import { csvw, rdf, xsd } from '@tpluscode/rdf-ns-builders'
+import type { NamedNode } from '@rdfjs/types'
+import TermMap from '@rdfjs/term-map'
+
+interface ValidatorFunc {
+  (value: string): boolean
+}
 
 /**
  * Validators registry
  */
 class Registry {
+  public readonly validators: TermMap<NamedNode, ValidatorFunc>
+
   constructor() {
-    this.validators = new Map()
+    this.validators = new TermMap()
   }
 
   /**
    * Register a new validator for a specific datatype.
-   *
-   * @param {NamedNode} datatype - Validator datatype
-   * @param {Function} validatorFunc - Function to validate the term value.
-   *    Takes a term value (string) and returns a boolean describing if the
-   *    value is valid in regards to the validator's datatype.
-   * @returns {void}
    */
-  register(datatype, validatorFunc) {
-    this.validators.set(toCanonical(datatype), validatorFunc)
+  register(datatype: NamedNode, validatorFunc: ValidatorFunc) {
+    this.validators.set(datatype, validatorFunc)
   }
 
   /**
    * Find validator for a given datatype.
-   *
-   * @param {NamedNode | null} datatype - The datatype
-   * @returns {Function | null} - The validation function, if found. `null`
-   *    otherwise.
    */
-  find(datatype) {
+  find(datatype: NamedNode | null) {
     if (!datatype) {
       return null
     }
 
-    return this.validators.get(toCanonical(datatype))
+    return this.validators.get(datatype)
   }
 }
 
 export const validators = new Registry()
 
-validators.register(xsd.anySimpleType, value => true)
-validators.register(xsd.anyAtomicType, value => true)
-validators.register(xsd.string, value => true)
+validators.register(xsd.anySimpleType, () => true)
+validators.register(xsd.anyAtomicType, () => true)
+validators.register(xsd.string, () => true)
 
 validators.register(xsd.normalizedString, value => isNormalized(value))
 
@@ -54,7 +50,7 @@ validators.register(xsd.token, value => (
   !value.includes('  ')
 ))
 
-function isNormalized(value) {
+function isNormalized(value: string) {
   const forbiddenChars = ['\n', '\r', '\t']
   return !forbiddenChars.some(forbiddenChar => value.includes(forbiddenChar))
 }
@@ -154,7 +150,7 @@ validators.register(xsd.float, validateFloat)
 validators.register(xsd.double, validateFloat)
 
 const floatPattern = new RegExp(`^${signSeg}${decimalSeg}((E|e)(\\+|-)?\\d+)?$`)
-function validateFloat(value) {
+function validateFloat(value: string) {
   return (
     value === 'INF' ||
     value === '-INF' ||
@@ -245,16 +241,16 @@ validators.register(csvw.JSON, value => {
 })
 
 // TODO
-validators.register(xsd.NOTATION, value => true)
-validators.register(xsd.QName, value => true)
-validators.register(xsd.Name, value => true)
-validators.register(xsd.NCName, value => true)
-validators.register(xsd.ENTITY, value => true)
-validators.register(xsd.ID, value => true)
-validators.register(xsd.IDREF, value => true)
-validators.register(xsd.NMTOKEN, value => true)
-validators.register(xsd.ENTITIES, value => true)
-validators.register(xsd.IDREFS, value => true)
-validators.register(xsd.NMTOKENS, value => true)
-validators.register(rdf.XMLLiteral, value => true)
-validators.register(rdf.HTML, value => true)
+validators.register(xsd.NOTATION, () => true)
+validators.register(xsd.QName, () => true)
+validators.register(xsd.Name, () => true)
+validators.register(xsd.NCName, () => true)
+validators.register(xsd.ENTITY, () => true)
+validators.register(xsd.ID, () => true)
+validators.register(xsd.IDREF, () => true)
+validators.register(xsd.NMTOKEN, () => true)
+validators.register(xsd.ENTITIES, () => true)
+validators.register(xsd.IDREFS, () => true)
+validators.register(xsd.NMTOKENS, () => true)
+validators.register(rdf.XMLLiteral, () => true)
+validators.register(rdf.HTML, () => true)
