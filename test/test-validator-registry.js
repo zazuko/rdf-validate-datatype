@@ -1,9 +1,7 @@
-/* eslint-env mocha */
-const assert = require('assert')
-const $rdf = require('@rdfjs/data-model')
-const { xsd } = require('../src/namespaces')
-
-const { validators, validateTerm } = require('../index')
+import assert from 'assert'
+import $rdf from '@rdfjs/data-model'
+import { xsd } from '@tpluscode/rdf-ns-builders'
+import { validators, validateTerm } from '../index.js'
 
 describe('validator registry', () => {
   it('can register a new datatype', () => {

@@ -1,9 +1,7 @@
-/* eslint-env mocha */
-const assert = require('assert')
-const $rdf = require('@rdfjs/data-model')
-const { rdf, rdfs, xsd } = require('../src/namespaces')
-
-const { validateQuad } = require('../index')
+import assert from 'assert'
+import $rdf from '@rdfjs/data-model'
+import { rdf, rdfs, xsd } from '@tpluscode/rdf-ns-builders'
+import { validateQuad } from '../index.js'
 
 describe('#validateQuad', () => {
   it('returns true for quad without object datatype', () => {

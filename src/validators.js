@@ -1,12 +1,12 @@
 /* global BigInt */
-const { csvw, rdf, xsd } = require('./namespaces')
-const toCanonical = require('@rdfjs/to-ntriples')
+import toCanonical from '@rdfjs/to-ntriples'
+import { csvw, rdf, xsd } from '@tpluscode/rdf-ns-builders'
 
 /**
  * Validators registry
  */
 class Registry {
-  constructor () {
+  constructor() {
     this.validators = new Map()
   }
 
@@ -19,7 +19,7 @@ class Registry {
    *    value is valid in regards to the validator's datatype.
    * @returns {void}
    */
-  register (datatype, validatorFunc) {
+  register(datatype, validatorFunc) {
     this.validators.set(toCanonical(datatype), validatorFunc)
   }
 
@@ -30,7 +30,7 @@ class Registry {
    * @returns {Function | null} - The validation function, if found. `null`
    *    otherwise.
    */
-  find (datatype) {
+  find(datatype) {
     if (!datatype) {
       return null
     }
@@ -39,7 +39,7 @@ class Registry {
   }
 }
 
-const validators = new Registry()
+export const validators = new Registry()
 
 validators.register(xsd.anySimpleType, value => true)
 validators.register(xsd.anyAtomicType, value => true)
@@ -54,7 +54,7 @@ validators.register(xsd.token, value => (
   !value.includes('  ')
 ))
 
-function isNormalized (value) {
+function isNormalized(value) {
   const forbiddenChars = ['\n', '\r', '\t']
   return !forbiddenChars.some(forbiddenChar => value.includes(forbiddenChar))
 }
@@ -154,7 +154,7 @@ validators.register(xsd.float, validateFloat)
 validators.register(xsd.double, validateFloat)
 
 const floatPattern = new RegExp(`^${signSeg}${decimalSeg}((E|e)(\\+|-)?\\d+)?$`)
-function validateFloat (value) {
+function validateFloat(value) {
   return (
     value === 'INF' ||
     value === '-INF' ||
@@ -258,5 +258,3 @@ validators.register(xsd.IDREFS, value => true)
 validators.register(xsd.NMTOKENS, value => true)
 validators.register(rdf.XMLLiteral, value => true)
 validators.register(rdf.HTML, value => true)
-
-module.exports = validators

@@ -1,9 +1,8 @@
-/* eslint-env mocha */
-const assert = require('assert')
-const $rdf = require('@rdfjs/data-model')
-const { csvw, xsd } = require('../src/namespaces')
+import assert from 'assert'
+import $rdf from '@rdfjs/data-model'
+import { csvw, xsd } from '@tpluscode/rdf-ns-builders'
 
-const { validateTerm } = require('../index')
+import { validateTerm } from '../index.js'
 
 describe('#validateTerm', () => {
   it('returns true for terms without datatype', () => {
@@ -433,7 +432,7 @@ describe('#validateTerm', () => {
     ['{"test": "test"}', csvw.JSON, true],
     ['{"test": "test",}', csvw.JSON, false],
     ['{"test": 2}', csvw.JSON, true],
-    ['{4: 2}', csvw.JSON, false]
+    ['{4: 2}', csvw.JSON, false],
   ].forEach(([input, datatype, expected, remark]) => {
     const datatypeName = datatype.value.split('#').slice(-1)[0]
     const titleRemark = remark ? ` (${remark})` : ''
