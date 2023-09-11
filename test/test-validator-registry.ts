@@ -17,7 +17,7 @@ describe('validator registry', () => {
   })
 
   it('can override an existing datatype', () => {
-    validators.register(xsd.date, value => true)
+    validators.register(xsd.date, () => true)
 
     const term = $rdf.literal('banana', xsd.date)
     assert.strictEqual(validateTerm(term), true)

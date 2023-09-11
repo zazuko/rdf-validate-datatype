@@ -1,12 +1,10 @@
+import type { Term } from '@rdfjs/types'
 import { validators } from './validators.js'
 
 /**
  * Validate that a term's value is valid in regards to its declared datatype.
- *
- * @param {Term} term - The term to validate
- * @returns {boolean} - `true` if valid, `false` otherwise
  */
-export function validateTerm(term) {
+export function validateTerm(term: Term) {
   if (term.termType !== 'Literal') {
     throw new Error('Cannot validate non-literal terms')
   }
