@@ -1,5 +1,15 @@
 ## 0.1.5
 
+## 0.2.0
+
+### Minor Changes
+
+- 204b050: Update to ESM
+
+### Patch Changes
+
+- 305a0a5: Bundle TypeScript declarations in package
+
 ### Patch Changes
 
 - Do not report false-negatives on valid `xsd:gYear` literals (fixes #100)
