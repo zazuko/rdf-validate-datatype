@@ -1,4 +1,4 @@
-const validators = require('./validators')
+import { validators } from './validators.js'
 
 /**
  * Validate that a term's value is valid in regards to its declared datatype.
@@ -6,7 +6,7 @@ const validators = require('./validators')
  * @param {Term} term - The term to validate
  * @returns {boolean} - `true` if valid, `false` otherwise
  */
-function validateTerm (term) {
+export function validateTerm(term) {
   if (term.termType !== 'Literal') {
     throw new Error('Cannot validate non-literal terms')
   }
@@ -19,5 +19,3 @@ function validateTerm (term) {
 
   return true
 }
-
-module.exports = validateTerm

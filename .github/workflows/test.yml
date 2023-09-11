@@ -9,21 +9,21 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: ['10', '12', '14']
+        node: ['16', '18', '20']
     name: Node ${{ matrix.node }}
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
       - run: npm ci
-      - run: npm run test-ci
+      - run: npx c8 --reporter lcovonly --reporter text npm test
       - uses: codecov/codecov-action@v1
 
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
       - run: npm ci
       - run: npm run lint

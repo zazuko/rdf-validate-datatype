@@ -1,9 +1,3 @@
-const validators = require('./src/validators')
-const validateTerm = require('./src/validate-term')
-const validateQuad = require('./src/validate-quad')
-
-module.exports = {
-  validators,
-  validateTerm,
-  validateQuad
-}
+export { validators } from './src/validators.js'
+export { validateTerm } from './src/validate-term.js'
+export { validateQuad } from './src/validate-quad.js'
