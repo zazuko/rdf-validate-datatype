@@ -141,7 +141,7 @@ validators.register(xsd.boolean, value => (
   value === 'false'
 ))
 
-const decimalSeg = `${signSeg}\\d+(\\.\\d+)?`
+const decimalSeg = `${signSeg}(\\d+\\.?\\d*|\\.\\d+)`
 
 const decimalPattern = new RegExp(`^${signSeg}${decimalSeg}$`)
 validators.register(xsd.decimal, value => decimalPattern.test(value))
