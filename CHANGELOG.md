@@ -1,5 +1,11 @@
 ## 0.1.5
 
+## 0.2.1
+
+### Patch Changes
+
+- 95303ee: Fix false-negative validation of `xsd:decimal` (fixes #27)
+
 ## 0.2.0
 
 ### Minor Changes
