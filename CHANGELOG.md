@@ -1,5 +1,11 @@
 ## 0.1.5
 
+## 0.2.2
+
+### Patch Changes
+
+- 1ee0165: Update `@tpluscode/rdf-ns-builders` to v5
+
 ## 0.2.1
 
 ### Patch Changes
