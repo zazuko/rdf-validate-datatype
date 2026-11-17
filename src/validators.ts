@@ -88,8 +88,8 @@ validators.register(xsd.negativeInteger, value => (
 
 validators.register(xsd.int, value => (
   integerPattern.test(value) &&
-  BigInt(value) >= BigInt('-2147483647') &&
-  BigInt(value) <= BigInt('2147483648')
+  BigInt(value) >= BigInt('-2147483648') &&
+  BigInt(value) <= BigInt('2147483647')
 ))
 
 validators.register(xsd.unsignedInt, value => (
@@ -143,13 +143,13 @@ validators.register(xsd.boolean, value => (
 
 const decimalSeg = `${signSeg}(\\d+\\.?\\d*|\\.\\d+)`
 
-const decimalPattern = new RegExp(`^${signSeg}${decimalSeg}$`)
+const decimalPattern = new RegExp(`^${decimalSeg}$`)
 validators.register(xsd.decimal, value => decimalPattern.test(value))
 
 validators.register(xsd.float, validateFloat)
 validators.register(xsd.double, validateFloat)
 
-const floatPattern = new RegExp(`^${signSeg}${decimalSeg}((E|e)(\\+|-)?\\d+)?$`)
+const floatPattern = new RegExp(`^${decimalSeg}((E|e)(\\+|-)?\\d+)?$`)
 function validateFloat(value: string) {
   return (
     value === 'INF' ||
@@ -196,13 +196,13 @@ validators.register(xsd.dateTimeStamp, value => dateTimeStampPattern.test(value)
 const datePattern = new RegExp(`^${dateSeg}${timezoneSeg}?$`)
 validators.register(xsd.date, value => datePattern.test(value))
 
-const dayPattern = new RegExp(`^${daySeg}${timezoneSeg}?$`)
+const dayPattern = new RegExp(`^---${daySeg}${timezoneSeg}?$`)
 validators.register(xsd.gDay, value => dayPattern.test(value))
 
 const monthPattern = new RegExp(`^--${monthSeg}${timezoneSeg}?$`)
 validators.register(xsd.gMonth, value => monthPattern.test(value))
 
-const monthDayPattern = new RegExp(`^${monthSeg}-${daySeg}${timezoneSeg}?$`)
+const monthDayPattern = new RegExp(`^--${monthSeg}-${daySeg}${timezoneSeg}?$`)
 validators.register(xsd.gMonthDay, value => monthDayPattern.test(value))
 
 const yearPattern = new RegExp(`^${yearSeg}${timezoneSeg}?$`)
