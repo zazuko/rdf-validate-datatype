@@ -2,3 +2,4 @@
 /coverage
 *.d.ts
 *.js
+!eslint.config.js

@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "prepack": "tsc",
-    "lint": "eslint . --ignore-path .gitignore",
+    "lint": "eslint . --quiet",
     "test": "mocha",
     "release": "changeset publish"
   },
@@ -33,14 +33,15 @@
     "@changesets/cli": "^2.26.2",
     "@rdfjs/data-model": "^2.0.1",
     "@rdfjs/types": "^1.1.0",
-    "@tpluscode/eslint-config": "^0.4.4",
+    "@tpluscode/eslint-config": "^4.0.4",
     "@types/mocha": "^10.0.1",
     "@types/rdfjs__data-model": "^2.0.4",
     "@types/rdfjs__term-map": "^2.0.0",
-    "@typescript-eslint/eslint-plugin": "^6.6.0",
-    "@typescript-eslint/parser": "^6.6.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
     "c8": "^8.0.1",
-    "eslint-import-resolver-typescript": "^3.6.0",
+    "eslint": "^10.0.0",
+    "eslint-import-resolver-typescript": "^4.0.0",
     "mocha": "^11",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2"

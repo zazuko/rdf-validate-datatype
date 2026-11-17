@@ -1,28 +1,28 @@
-import assert from 'assert'
+import assert from 'node:assert'
 import $rdf from '@rdfjs/data-model'
 import { csvw, xsd } from '@tpluscode/rdf-ns-builders'
-import { NamedNode } from '@rdfjs/types'
+import type { NamedNode } from '@rdfjs/types'
 import { validateTerm } from '../index.js'
 
-describe('#validateTerm', () => {
-  it('returns true for terms without datatype', () => {
+describe('#validateTerm', function () {
+  it('returns true for terms without datatype', function () {
     const term = $rdf.literal('test')
     const isValid = validateTerm(term)
     assert.strictEqual(isValid, true)
   })
 
-  it('returns true for unkown datatype', () => {
+  it('returns true for unkown datatype', function () {
     const term = $rdf.literal('test%é*$_4', $rdf.namedNode('custom-datatype'))
     const isValid = validateTerm(term)
     assert.strictEqual(isValid, true)
   })
 
-  it('throws on named nodes', () => {
+  it('throws on named nodes', function () {
     const term = $rdf.namedNode('test')
     assert.throws(() => validateTerm(term), Error)
   })
 
-  it('throws on blank nodes', () => {
+  it('throws on blank nodes', function () {
     const term = $rdf.blankNode()
     assert.throws(() => validateTerm(term), Error)
   })
@@ -473,7 +473,7 @@ describe('#validateTerm', () => {
   testCases.forEach(([input, datatype, expected, remark]) => {
     const datatypeName = datatype.value.split('#').slice(-1)[0]
     const titleRemark = remark ? ` (${remark})` : ''
-    it(`validates ${expected ? 'valid' : 'invalid'} ${datatypeName}${titleRemark}: "${input}"`, () => {
+    it(`validates ${expected ? 'valid' : 'invalid'} ${datatypeName}${titleRemark}: "${input}"`, function () {
       const term = $rdf.literal(input, datatype)
       const isValid = validateTerm(term)
       assert.strictEqual(isValid, expected)

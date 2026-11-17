@@ -44,10 +44,10 @@ validators.register(xsd.string, () => true)
 validators.register(xsd.normalizedString, value => isNormalized(value))
 
 validators.register(xsd.token, value => (
-  isNormalized(value) &&
-  !value.startsWith(' ') &&
-  !value.endsWith(' ') &&
-  !value.includes('  ')
+  isNormalized(value)
+  && !value.startsWith(' ')
+  && !value.endsWith(' ')
+  && !value.includes('  ')
 ))
 
 function isNormalized(value: string) {
@@ -67,78 +67,78 @@ const integerPattern = new RegExp(`^${signSeg}\\d+$`)
 validators.register(xsd.integer, value => integerPattern.test(value))
 
 validators.register(xsd.nonNegativeInteger, value => (
-  integerPattern.test(value) &&
-  BigInt(value) >= BigInt('0')
+  integerPattern.test(value)
+  && BigInt(value) >= BigInt('0')
 ))
 
 validators.register(xsd.positiveInteger, value => (
-  integerPattern.test(value) &&
-  BigInt(value) > BigInt('0')
+  integerPattern.test(value)
+  && BigInt(value) > BigInt('0')
 ))
 
 validators.register(xsd.nonPositiveInteger, value => (
-  integerPattern.test(value) &&
-  BigInt(value) <= BigInt('0')
+  integerPattern.test(value)
+  && BigInt(value) <= BigInt('0')
 ))
 
 validators.register(xsd.negativeInteger, value => (
-  integerPattern.test(value) &&
-  BigInt(value) < BigInt('0')
+  integerPattern.test(value)
+  && BigInt(value) < BigInt('0')
 ))
 
 validators.register(xsd.int, value => (
-  integerPattern.test(value) &&
-  BigInt(value) >= BigInt('-2147483648') &&
-  BigInt(value) <= BigInt('2147483647')
+  integerPattern.test(value)
+  && BigInt(value) >= BigInt('-2147483648')
+  && BigInt(value) <= BigInt('2147483647')
 ))
 
 validators.register(xsd.unsignedInt, value => (
-  integerPattern.test(value) &&
-  BigInt(value) >= BigInt('0') &&
-  BigInt(value) <= BigInt('4294967295')
+  integerPattern.test(value)
+  && BigInt(value) >= BigInt('0')
+  && BigInt(value) <= BigInt('4294967295')
 ))
 
 validators.register(xsd.long, value => (
-  integerPattern.test(value) &&
-  BigInt(value) >= BigInt('-9223372036854775808') &&
-  BigInt(value) <= BigInt('9223372036854775807')
+  integerPattern.test(value)
+  && BigInt(value) >= BigInt('-9223372036854775808')
+  && BigInt(value) <= BigInt('9223372036854775807')
 ))
 
 validators.register(xsd.unsignedLong, value => (
-  integerPattern.test(value) &&
-  BigInt(value) >= BigInt('0') &&
-  BigInt(value) <= BigInt('18446744073709551615')
+  integerPattern.test(value)
+  && BigInt(value) >= BigInt('0')
+  && BigInt(value) <= BigInt('18446744073709551615')
 ))
 
 validators.register(xsd.short, value => (
-  integerPattern.test(value) &&
-  BigInt(value) >= BigInt('-32768') &&
-  BigInt(value) <= BigInt('32767')
+  integerPattern.test(value)
+  && BigInt(value) >= BigInt('-32768')
+  && BigInt(value) <= BigInt('32767')
 ))
 
 validators.register(xsd.unsignedShort, value => (
-  integerPattern.test(value) &&
-  BigInt(value) >= BigInt('0') &&
-  BigInt(value) <= BigInt('65535')
+  integerPattern.test(value)
+  && BigInt(value) >= BigInt('0')
+  && BigInt(value) <= BigInt('65535')
 ))
 
 validators.register(xsd.byte, value => (
-  integerPattern.test(value) &&
-  BigInt(value) >= BigInt('-128') &&
-  BigInt(value) <= BigInt('127')
+  integerPattern.test(value)
+  && BigInt(value) >= BigInt('-128')
+  && BigInt(value) <= BigInt('127')
 ))
 
 validators.register(xsd.unsignedByte, value => (
-  integerPattern.test(value) &&
-  BigInt(value) >= BigInt('0') &&
-  BigInt(value) <= BigInt('255')
+  integerPattern.test(value)
+  && BigInt(value) >= BigInt('0')
+  && BigInt(value) <= BigInt('255')
 ))
 
 validators.register(xsd.boolean, value => (
-  value === '1' ||
-  value === 'true' ||
-  value === '0' ||
-  value === 'false'
+  value === '1'
+  || value === 'true'
+  || value === '0'
+  || value === 'false'
 ))
 
 const decimalSeg = `${signSeg}(\\d+\\.?\\d*|\\.\\d+)`
@@ -152,10 +152,10 @@ validators.register(xsd.double, validateFloat)
 const floatPattern = new RegExp(`^${decimalSeg}((E|e)(\\+|-)?\\d+)?$`)
 function validateFloat(value: string) {
   return (
-    value === 'INF' ||
-    value === '-INF' ||
-    value === 'NaN' ||
-    floatPattern.test(value)
+    value === 'INF'
+    || value === '-INF'
+    || value === 'NaN'
+    || floatPattern.test(value)
   )
 }
 
@@ -231,11 +231,12 @@ const b64FinalSeg = `(${b64FinalQuadSeg}|${b64Padded16Seg}|${b64Padded8Seg})`
 const b64Pattern = new RegExp(`^(${b64QuadSeg}*${b64FinalSeg})?$`)
 validators.register(xsd.base64Binary, value => b64Pattern.test(value))
 
-validators.register(csvw.JSON, value => {
+validators.register(csvw.JSON, (value) => {
   try {
     JSON.parse(value)
     return true
-  } catch (e) {
+  }
+  catch {
     return false
   }
 })

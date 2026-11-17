@@ -1,10 +1,10 @@
-import assert from 'assert'
+import assert from 'node:assert'
 import $rdf from '@rdfjs/data-model'
 import { xsd } from '@tpluscode/rdf-ns-builders'
 import { validators, validateTerm } from '../index.js'
 
-describe('validator registry', () => {
-  it('can register a new datatype', () => {
+describe('validator registry', function () {
+  it('can register a new datatype', function () {
     const datatype = $rdf.namedNode('my-datatype')
 
     validators.register(datatype, value => value.startsWith('X-'))
@@ -16,7 +16,7 @@ describe('validator registry', () => {
     assert.strictEqual(validateTerm(invalidTerm), false)
   })
 
-  it('can override an existing datatype', () => {
+  it('can override an existing datatype', function () {
     validators.register(xsd.date, () => true)
 
     const term = $rdf.literal('banana', xsd.date)

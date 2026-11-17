@@ -1,10 +1,10 @@
-import assert from 'assert'
+import assert from 'node:assert'
 import $rdf from '@rdfjs/data-model'
 import { rdf, rdfs, xsd } from '@tpluscode/rdf-ns-builders'
 import { validateQuad } from '../index.js'
 
-describe('#validateQuad', () => {
-  it('returns true for quad without object datatype', () => {
+describe('#validateQuad', function () {
+  it('returns true for quad without object datatype', function () {
     const term = $rdf.literal('test')
     const quad = $rdf.quad($rdf.blankNode(), rdfs.label, term)
 
@@ -13,7 +13,7 @@ describe('#validateQuad', () => {
     assert.strictEqual(isValid, true)
   })
 
-  it('returns true if object literal is valid', () => {
+  it('returns true if object literal is valid', function () {
     const term = $rdf.literal('2019-12-24', xsd.date)
     const quad = $rdf.quad($rdf.blankNode(), rdfs.label, term)
 
@@ -22,7 +22,7 @@ describe('#validateQuad', () => {
     assert.strictEqual(isValid, true)
   })
 
-  it('returns false if object literal is not valid', () => {
+  it('returns false if object literal is not valid', function () {
     const term = $rdf.literal('test', xsd.date)
     const quad = $rdf.quad($rdf.blankNode(), rdfs.label, term)
 
@@ -31,7 +31,7 @@ describe('#validateQuad', () => {
     assert.strictEqual(isValid, false)
   })
 
-  it('returns true for quad with namedNode object', () => {
+  it('returns true for quad with namedNode object', function () {
     const quad = $rdf.quad($rdf.blankNode(), rdf.type, $rdf.namedNode('Person'))
 
     const isValid = validateQuad(quad)
@@ -39,7 +39,7 @@ describe('#validateQuad', () => {
     assert.strictEqual(isValid, true)
   })
 
-  it('returns true for quad with blankNode object', () => {
+  it('returns true for quad with blankNode object', function () {
     const quad = $rdf.quad($rdf.blankNode(), rdf.first, $rdf.blankNode())
 
     const isValid = validateQuad(quad)
