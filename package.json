@@ -39,11 +39,11 @@
     "@types/rdfjs__term-map": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
-    "c8": "^8.0.1",
+    "c8": "^12.0.0",
     "eslint": "^10.0.0",
     "eslint-import-resolver-typescript": "^4.0.0",
-    "mocha": "^11",
-    "ts-node": "^10.9.1",
+    "mocha": "^12",
+    "tsx": "^4.23.15",
     "typescript": "^5.2.2"
   },
   "files": [
@@ -52,6 +52,6 @@
   ],
   "mocha": {
     "extension": "ts",
-    "loader": "ts-node/esm"
+    "require": "tsx"
   }
 }
