@@ -1,3 +1,17 @@
+## 0.3.0
+
+### Minor Changes
+
+- d24e335: Correct XSD datatype validations (fixes #35):
+  - `xsd:int`: fixed bounds to [-2147483648, 2147483647]
+  - `xsd:gDay`: enforce `---` prefix according to XML Schema Part 2 specification
+  - `xsd:gMonthDay`: enforce `--` prefix according to XML Schema Part 2 specification
+  - `xsd:decimal`, `xsd:float`, `xsd:double`: disallow invalid multiple/duplicate sign prefixes
+
+### Patch Changes
+
+- 2698e7f: `@tpluscode/rdf-ns-builders` became a peer dependency
+
 ## 0.1.5
 
 ## 0.2.2
